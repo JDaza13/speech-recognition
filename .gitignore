@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/.c9
+/.git
 
 # testing
 /coverage
@@ -21,6 +23,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-/.c9
-/.git
