@@ -40,7 +40,7 @@ class Question extends React.Component {
         return (
             <Paper className={this.state.forward ? 'container-forwarding' : ''}>
                 <FormControl component="fieldset">
-                  <FormLabel component="legend" className="question-title">Please select your gender</FormLabel>
+                  <FormLabel component="legend" className="question-title">Please select your gender </FormLabel>
                   <RadioGroup aria-label="gender" name="gender1" value={this.state.answer} onChange={(event) => this.setState({ answer: event.target.value})}>
                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                     <FormControlLabel value="male" control={<Radio />} label="Male" />
