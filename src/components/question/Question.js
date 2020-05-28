@@ -1,6 +1,8 @@
 import React from 'react';
 import './Question.scss';
 
+import questionList from '../questions.json';
+
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
@@ -15,8 +17,9 @@ class Question extends React.Component {
         
         super(props);
         this.state = {
-          answer: 'female',
-          forward: false
+            answer: null,
+            forward: false,
+            questionIndex: 0
         };
         this.forwardQuestion = this.forwardQuestion.bind(this);
     }
@@ -25,7 +28,7 @@ class Question extends React.Component {
         if (this.state.forward) {
         this.endForwardQuestion = setTimeout(() => { 
             this.setState(() => ({forward: false}));
-        }, 1000);
+        }, 500);
         }
     }
     componentWillUnmount() {
@@ -34,21 +37,27 @@ class Question extends React.Component {
     
     forwardQuestion() {
         this.setState(state => ({forward: true}));
+        if(this.state.questionIndex < questionList.length - 1){
+            this.setState(state => ({questionIndex: this.state.questionIndex + 1}));
+        }
+        else{
+            this.setState(state => ({questionIndex: 0}));
+        }
+        
     }
     
     render() {
         return (
             <Paper className={this.state.forward ? 'container-forwarding' : ''}>
                 <FormControl component="fieldset">
-                  <FormLabel component="legend" className="question-title">Please select your gender </FormLabel>
-                  <RadioGroup aria-label="gender" name="gender1" value={this.state.answer} onChange={(event) => this.setState({ answer: event.target.value})}>
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                    <FormControlLabel value="other" control={<Radio />} label="Other" />
-                    <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
+                  <FormLabel component="legend" className="question-title">{questionList[this.state.questionIndex].title} </FormLabel>
+                  <RadioGroup aria-label="single-answer-question" name="single-answer-question" value={this.state.answer} onChange={(event) => this.setState({ answer: event.target.value})}>
+                    {questionList[this.state.questionIndex].options.map(function(i) {
+                        return (<FormControlLabel value={i.value} label={i.label} control={<Radio />} />);
+                    })}
                   </RadioGroup>
                 </FormControl>
-                <Button variant="contained" color="primary" className="button-next" onClick={this.forwardQuestion}>Next</Button>
+                <Button variant="contained" color="primary" className="button-next" disabled={this.state.forward} onClick={this.forwardQuestion}>Next</Button>
             </Paper>
         );
     }
