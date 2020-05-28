@@ -46,7 +46,7 @@
     ]
 },
 {
-    "title": "Which of the following is your favorite pet",
+    "title": "Which is your favorite pet",
     "description": "This is a random description",
     "multipleAnswer": false,
     "options": [
